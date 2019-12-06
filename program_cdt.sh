@@ -163,7 +163,7 @@ else
 	do
 		show_list
 		read -p "Enter Number:" project_num
-		if [[ ${project_num} < $(expr ${#PROJECT_INFO[*]} / 2 + 1) ]] && [[ 0 < ${project_num} ]]; then
+		if [[ ${project_num} -lt $(expr ${#PROJECT_INFO[*]} / 2 + 1) ]] && [[ 0 -lt ${project_num} ]]; then
 			if [[ ${project_num} == $(expr ${#PROJECT_INFO[*]} / 2) ]]; then
 				exit
 			elif [[ ${project_num} == $(expr ${#PROJECT_INFO[*]} / 2 - 1) ]]; then
