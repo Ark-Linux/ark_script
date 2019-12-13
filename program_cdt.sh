@@ -7,8 +7,10 @@ readonly CDT_FOLDER="cdt-image"
 
 readonly PROJECT_INFO=( \
 	evk_405_cdt		0x03,0x20,0x02,0x00,0x01,0x00,end \
-	zepp_cdt		0x03,0x20,0x55,0x00,0x00,0x00,end \
-	sbar_cdt		0x03,0x20,0x66,0x00,0x00,0x00,end \
+	ninja_405_cdt		0x03,0x20,0x66,0x00,0x00,0x00,end \
+	ninja_403_cdt		0x03,0x20,0x55,0x00,0x00,0x00,end \
+	zepp_es_cdt		0x03,0x20,0x55,0x01,0x00,0x00,end \
+	smps_es_cdt		0x03,0x20,0x55,0x02,0x00,0x00,end \
 	gen_all_cdt		" " \
 	clean_all_cdt		" " \
 	Quit			" " \
@@ -161,7 +163,7 @@ else
 	do
 		show_list
 		read -p "Enter Number:" project_num
-		if [[ ${project_num} < $(expr ${#PROJECT_INFO[*]} / 2 + 1) ]] && [[ 0 < ${project_num} ]]; then
+		if [[ ${project_num} -lt $(expr ${#PROJECT_INFO[*]} / 2 + 1) ]] && [[ 0 -lt ${project_num} ]]; then
 			if [[ ${project_num} == $(expr ${#PROJECT_INFO[*]} / 2) ]]; then
 				exit
 			elif [[ ${project_num} == $(expr ${#PROJECT_INFO[*]} / 2 - 1) ]]; then
