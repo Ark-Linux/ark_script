@@ -100,37 +100,37 @@ echo $(echo ${COMMAND} | grep -w "device" | sed 's/.*attached //g;s/ device.*//g
 adb reboot bootloader
 
 if [[ ${ENVIRONMENT} == "l" ]]; then
-    PERMISSIONS="sudo"
+    PERMISSIONS="sudo "
     EXECUTABLE_PROGRAM=""
 else
-    PERMISSIONS=""
+    PERMISSIONS="./"
     EXECUTABLE_PROGRAM=".exe"
 fi
 
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} devices
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} devices
 
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash bluetooth_${BOOT} ${PKG_NAME}/BTFM.bin
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash cmnlib64_${BOOT} ${PKG_NAME}/cmnlib64.mbn
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash cmnlib_${BOOT} ${PKG_NAME}/cmnlib.mbn
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash devcfg_${BOOT} ${PKG_NAME}/devcfg.mbn
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash dsp_${BOOT} ${PKG_NAME}/dspso.bin
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash keymaster_${BOOT} ${PKG_NAME}/keymaster64.mbn
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash logfs ${PKG_NAME}/logfs_ufs_8mb.bin
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash modem_${BOOT} ${PKG_NAME}/NON-HLOS.bin
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash pmic_${BOOT} ${PKG_NAME}/pmic.elf
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash rpm_${BOOT} ${PKG_NAME}/rpm.mbn
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash storsec ${PKG_NAME}/storsec.mbn
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash tz_${BOOT} ${PKG_NAME}/tz.mbn
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash uefisecapp_${BOOT} ${PKG_NAME}/uefi_sec.mbn
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash xbl_${BOOT} ${PKG_NAME}/xbl.elf
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash bluetooth_${BOOT} ${PKG_NAME}/BTFM.bin
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash cmnlib64_${BOOT} ${PKG_NAME}/cmnlib64.mbn
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash cmnlib_${BOOT} ${PKG_NAME}/cmnlib.mbn
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash devcfg_${BOOT} ${PKG_NAME}/devcfg.mbn
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash dsp_${BOOT} ${PKG_NAME}/dspso.bin
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash keymaster_${BOOT} ${PKG_NAME}/keymaster64.mbn
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash logfs ${PKG_NAME}/logfs_ufs_8mb.bin
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash modem_${BOOT} ${PKG_NAME}/NON-HLOS.bin
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash pmic_${BOOT} ${PKG_NAME}/pmic.elf
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash rpm_${BOOT} ${PKG_NAME}/rpm.mbn
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash storsec ${PKG_NAME}/storsec.mbn
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash tz_${BOOT} ${PKG_NAME}/tz.mbn
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash uefisecapp_${BOOT} ${PKG_NAME}/uefi_sec.mbn
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash xbl_${BOOT} ${PKG_NAME}/xbl.elf
 
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash abl_${BOOT} ${PKG_NAME}/abl.elf
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash boot_${BOOT}  ${PKG_NAME}/boot.img
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash persist ${PKG_NAME}/persist.img
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash system_${BOOT} ${PKG_NAME}/system.img
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash systemrw ${PKG_NAME}/systemrw.img
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash cache  ${PKG_NAME}/cache.img
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash userdata ${PKG_NAME}/usrdata.img
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash abl_${BOOT} ${PKG_NAME}/abl.elf
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash boot_${BOOT}  ${PKG_NAME}/boot.img
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash persist ${PKG_NAME}/persist.img
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash system_${BOOT} ${PKG_NAME}/system.img
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash systemrw ${PKG_NAME}/systemrw.img
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash cache  ${PKG_NAME}/cache.img
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} ${OPTION} flash userdata ${PKG_NAME}/usrdata.img
 
-${PERMISSIONS} fastboot${EXECUTABLE_PROGRAM} reboot
+${PERMISSIONS}fastboot${EXECUTABLE_PROGRAM} reboot
 exec bash;
