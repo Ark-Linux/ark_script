@@ -16,9 +16,24 @@ readonly PROJECT_INFO=( \
 	Quit			" " \
 )
 
-if [ ! -d $PROJECT_DIR/${CDT_FOLDER} ];then
-	mkdir -p $PROJECT_DIR/${CDT_FOLDER}
-fi
+die() { echo $* >&2; exit 1; }
+USAGE() {
+cat <<-EOF
+Usage:
+Program CDT
+
+$(basename $0) [-i INTERACTIVE]
+* -i/--interactive: interactive option either n(non-interactive) or y(interactive).
+* -c/--clean: clean all CDT
+
+example:
+./$(basename $0) -i n
+./$(basename $0) -i y
+./$(basename $0) -c
+
+EOF
+	exit 1
+}
 
 generate_gpt() {
 	echo "generate gpt start"
@@ -151,10 +166,38 @@ show_list() {
 	done
 }
 
-if [[ ${1} == "clean" ]]; then
+while [[ $# -gt 0 ]]; do
+	case "$1" in
+		-i|--interactive)
+			if [[ $2 == "y" ]] || [[ $2 == "n" ]]; then
+				INTERACTIVE=$2
+			fi
+			shift 2
+			;;
+		-c|--clean)
+			CLEAN=$1
+			shift 1
+			;;
+		*)
+			echo "Unknown option $1"
+            USAGE
+			exit 1;;
+		esac
+done
+
+if [[ ${CLEAN} == "" ]] && [[ ${INTERACTIVE} == "" ]]; then
+    echo "ERROR: function option ERROR"
+    USAGE
+fi
+
+if [ ! -d $PROJECT_DIR/${CDT_FOLDER} ];then
+	mkdir -p $PROJECT_DIR/${CDT_FOLDER}
+fi
+
+if [[ ${CLEAN} == "--clean" ]] || [[ ${CLEAN} == "-c" ]]; then
 	clear
 	clean_all_cdt
-elif [[ ${1} == "auto" ]]; then
+elif [[ ${INTERACTIVE} == "n" ]]; then
 	clear
 	gen_all_cdt
 else
