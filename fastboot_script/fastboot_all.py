@@ -9,6 +9,8 @@ class FastbootImage:
     __current_dir = "./" #os.getcwd()
     __packge_name = "release_pkg"
     __system_environment = "Linux"
+    __check_fastboot_command = ""
+    __platform_command = ""
     __image_table = (('xbl.elf', 'xbl_a'),               ('pmic.elf', 'pmic_a'),                 ('logfs_ufs_8mb.bin', 'logfs'),\
                      ('BTFM.bin', 'bluetooth_a'),        ('NON-HLOS.bin', 'modem_a'),            ('dspso.bin', 'dsp_a'),\
                      ('rpm.mbn', 'rpm_a'),               ('cmnlib.mbn', 'cmnlib_a'),             ('cmnlib64.mbn', 'cmnlib64_a'),\
@@ -45,32 +47,28 @@ class FastbootImage:
         check_result = True
         if platform.system() == 'Linux':
             self.__system_environment = 'Linux'
+            self.__check_fastboot_command = "sudo fastboot devices"
+            self.__platform_command = "sudo fastboot "
         elif platform.system() == 'Windows':
             self.__system_environment = 'Windows'
+            self.__check_fastboot_command = 'fastboot.exe devices'
+            self.__platform_command = "fastboot.exe "
         else:
             check_result = False
         return check_result
 
     def __into_fastboot_mode(self):
         os.popen('adb reboot bootloader')
-        if self.__system_environment == 'Windows':
-            os.popen('fastboot.exe devices')
-        elif self.__system_environment == 'Linux':
-            os.popen("sudo fastboot devices")
+        os.popen(self.__check_fastboot_command)
 
     def __fastboot_process(self):
-        platform_comment = ""
-        if self.__system_environment == 'Windows':
-            platform_comment = "fastboot.exe "
-        elif self.__system_environment == 'Linux':
-            platform_comment = "sudo fastboot " 
         for image in self.__image_table:
             print("downloading image:",image[0])
-            fastboot_comment = platform_comment + 'flash ' + image[1] + ' ./' + self.__packge_name + '/' + image[0]
-            os.popen(fastboot_comment)
+            fastboot_command = self.__platform_command + 'flash ' + image[1] + ' ./' + self.__packge_name + '/' + image[0]
+            os.popen(fastboot_command)
         print("system reboot")
-        fastboot_comment = platform_comment + "reboot"
-        os.popen(fastboot_comment)
+        fastboot_command = self.__platform_command + "reboot"
+        os.popen(fastboot_command)
 
     def run(self):
         if self.__check_image() == True:
