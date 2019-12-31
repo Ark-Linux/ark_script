@@ -4,6 +4,7 @@ readonly PROJECT_DIR=$(readlink -f $(pwd)/..)
 readonly CRTDIR=$(pwd)
 readonly PKG_NAME="release_pkg"
 readonly FASTBOOT_PKG_NAME="fastboot_package"
+readonly FASTBOOT_SCRIPT="fastboot_script"
 
 die() { echo $* >&2; exit 1; }
 
@@ -37,25 +38,25 @@ deploy_dir_pkgs=(
     usrdata.img
 )
 
-rm -rf ${PROJECT_DIR}/${FASTBOOT_PACK_NAME}/${PKG_NAME}
+rm -rf ${CRTDIR}/${FASTBOOT_PACK_NAME}/${PKG_NAME}*
 
 for ws_pkg_path in ${ws_dir_pkgs_paths[@]}; do
     [[ -e ${ws_pkg_path} ]] || die "${ws_pkg_path} does not exist"
-    [[ -e ${PROJECT_DIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME} ]] || mkdir -p ${PROJECT_DIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME}
-    cp -Rf ${ws_pkg_path} ${PROJECT_DIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME}
+    [[ -e ${CRTDIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME} ]] || mkdir -p ${CRTDIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME}
+    cp -Rf ${ws_pkg_path} ${CRTDIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME}
 done
 
 for deploy_pkgs in ${deploy_dir_pkgs[@]}; do
     deploy_pkg_path=$(find ${deploy_dir} -name ${deploy_pkgs} | head -1)
     [[ -e ${deploy_pkg_path} ]] || die "${deploy_pkg_path} does not exist"
-    [[ -e ${PROJECT_DIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME} ]] || mkdir -p ${PROJECT_DIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME}
-    cp -Rf ${deploy_pkg_path} ${PROJECT_DIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME}
+    [[ -e ${CRTDIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME} ]] || mkdir -p ${CRTDIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME}
+    cp -Rf ${deploy_pkg_path} ${CRTDIR}/${FASTBOOT_PKG_NAME}/${PKG_NAME}
 done
 
-cp -Rf ${CRTDIR}/fastboot_all.sh ${PROJECT_DIR}/${FASTBOOT_PKG_NAME}
-chmod 777 ${PROJECT_DIR}/${FASTBOOT_PKG_NAME}/fastboot_all.sh
+cp -Rf ${CRTDIR}/${FASTBOOT_SCRIPT}/* ${CRTDIR}/${FASTBOOT_PKG_NAME}
+chmod 777 ${CRTDIR}/${FASTBOOT_PKG_NAME}/*
 
-cd ${PROJECT_DIR}
+cd ${CRTDIR}
 zip -p -r ${FASTBOOT_PKG_NAME}.zip ${FASTBOOT_PKG_NAME}
 md5sum ${FASTBOOT_PKG_NAME}.zip > ${FASTBOOT_PKG_NAME}.zip.md5
 
