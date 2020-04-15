@@ -12,6 +12,8 @@ readonly PROJECT_INFO=( \
 	zepp_es_cdt		0x03,0x20,0x55,0x01,0x00,0x00,end \
 	zepp_es_som4_cdt	0x03,0x20,0x55,0x01,0x01,0x00,end \
 	zepp_es2_som4_cdt	0x03,0x20,0x55,0x01,0x02,0x00,end \
+	zepp_es_proximity_cdt   0x03,0x20,0x55,0x01,0x03,0x00,end \
+	zepp_evt_cdt   		0x03,0x20,0x55,0x01,0x04,0x00,end \
 	smps_es_cdt		0x03,0x20,0x55,0x02,0x00,0x00,end \
 	wedge_es_cdt		0x03,0x20,0x55,0x03,0x00,0x00,end \
 	gen_all_cdt		" " \
@@ -41,8 +43,8 @@ EOF
 generate_gpt() {
 	echo "generate gpt start"
 	mkdir -p $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
-	cp $PROJECT_DIR/boot_images/QcomPkg/Tools/emmc_cdt_program_scripts/partition.xml $PROJECT_DIR/${CDT_FOLDER}/${1}/temp/
-	cp $PROJECT_DIR/common/config/storage/ptool.py $PROJECT_DIR/${CDT_FOLDER}/${1}/temp/
+	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Tools/emmc_cdt_program_scripts/partition.xml $PROJECT_DIR/${CDT_FOLDER}/${1}/temp/
+	cp $PROJECT_DIR/QCS405.LE.1.2/common/config/storage/ptool.py $PROJECT_DIR/${CDT_FOLDER}/${1}/temp/
 
 	cd $PROJECT_DIR/${CDT_FOLDER}/${1}/temp/
 	python ptool.py -x partition.xml -gpt 2
@@ -76,7 +78,7 @@ generate_rawprogram() {
 copy_programmer_elf() {
 	echo "copy programmer elf start"
 
-	cp $PROJECT_DIR/boot_images/QcomPkg/Qcs405Pkg/Bin/405/LA/RELEASE/prog_firehose_ddr.elf $PROJECT_DIR/${CDT_FOLDER}/${1}/
+	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Qcs405Pkg/Bin/405/LA/RELEASE/prog_firehose_ddr.elf $PROJECT_DIR/${CDT_FOLDER}/${1}/
 
 	echo "copy progtammer elf finish"
 }
@@ -85,8 +87,8 @@ generate_cdt_bin() {
 	echo "generate cdt bin start"
 
 	mkdir -p $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
-	cp $PROJECT_DIR/boot_images/QcomPkg/Tools/cdt_generator.py $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
-	cp $PROJECT_DIR/boot_images/QcomPkg/Tools/iot_0.0_platform_dal_jedec_lpddr3_single_channel_dal.xml $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
+	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Tools/cdt_generator.py $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
+	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Tools/iot_0.0_platform_dal_jedec_lpddr3_single_channel_dal.xml $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
 
 	cd $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
 
