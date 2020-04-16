@@ -42,11 +42,11 @@ EOF
 
 generate_gpt() {
 	echo "generate gpt start"
-	mkdir -p $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
-	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Tools/emmc_cdt_program_scripts/partition.xml $PROJECT_DIR/${CDT_FOLDER}/${1}/temp/
-	cp $PROJECT_DIR/QCS405.LE.1.2/common/config/storage/ptool.py $PROJECT_DIR/${CDT_FOLDER}/${1}/temp/
+	mkdir -p $CRTDIR/${CDT_FOLDER}/${1}/temp
+	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Tools/emmc_cdt_program_scripts/partition.xml $CRTDIR/${CDT_FOLDER}/${1}/temp/
+	cp $PROJECT_DIR/QCS405.LE.1.2/common/config/storage/ptool.py $CRTDIR/${CDT_FOLDER}/${1}/temp/
 
-	cd $PROJECT_DIR/${CDT_FOLDER}/${1}/temp/
+	cd $CRTDIR/${CDT_FOLDER}/${1}/temp/
 	python ptool.py -x partition.xml -gpt 2
 
 	cp ./gpt_main2.bin ../
@@ -70,7 +70,7 @@ generate_rawprogram() {
   <program SECTOR_SIZE_IN_BYTES=\"512\" file_sector_offset=\"0\" filename=\"\" label=\"last_grow\" num_partition_sectors=\"1\" partofsingleimage=\"false\" physical_partition_number=\"2\" readbackverify=\"false\" size_in_KB=\"0.5\" sparse=\"false\" start_byte_hex=\"0x4c00\" start_sector=\"38\"/>
   <program SECTOR_SIZE_IN_BYTES=\"512\" file_sector_offset=\"0\" filename=\"gpt_main2.bin\" label=\"PrimaryGPT\" num_partition_sectors=\"34\" partofsingleimage=\"true\" physical_partition_number=\"2\" readbackverify=\"false\" size_in_KB=\"17.0\" sparse=\"false\" start_byte_hex=\"0x0\" start_sector=\"0\"/>
   <program SECTOR_SIZE_IN_BYTES=\"512\" file_sector_offset=\"0\" filename=\"gpt_backup2.bin\" label=\"BackupGPT\" num_partition_sectors=\"33\" partofsingleimage=\"true\" physical_partition_number=\"2\" readbackverify=\"false\" size_in_KB=\"16.5\" sparse=\"false\" start_byte_hex=\"(512*NUM_DISK_SECTORS)-16896.\" start_sector=\"NUM_DISK_SECTORS-33.\"/>
-</data>" > $PROJECT_DIR/${CDT_FOLDER}/${1}/rawprogram2.xml
+</data>" > $CRTDIR/${CDT_FOLDER}/${1}/rawprogram2.xml
 
 	echo "generate rawprogram finish"
 }
@@ -78,7 +78,7 @@ generate_rawprogram() {
 copy_programmer_elf() {
 	echo "copy programmer elf start"
 
-	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Qcs405Pkg/Bin/405/LA/RELEASE/prog_firehose_ddr.elf $PROJECT_DIR/${CDT_FOLDER}/${1}/
+	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Qcs405Pkg/Bin/405/LA/RELEASE/prog_firehose_ddr.elf $CRTDIR/${CDT_FOLDER}/${1}/
 
 	echo "copy progtammer elf finish"
 }
@@ -86,11 +86,11 @@ copy_programmer_elf() {
 generate_cdt_bin() {
 	echo "generate cdt bin start"
 
-	mkdir -p $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
-	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Tools/cdt_generator.py $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
-	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Tools/iot_0.0_platform_dal_jedec_lpddr3_single_channel_dal.xml $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
+	mkdir -p $CRTDIR/${CDT_FOLDER}/${1}/temp
+	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Tools/cdt_generator.py $CRTDIR/${CDT_FOLDER}/${1}/temp
+	cp $PROJECT_DIR/BOOT.XF.0.1/boot_images/QcomPkg/Tools/iot_0.0_platform_dal_jedec_lpddr3_single_channel_dal.xml $CRTDIR/${CDT_FOLDER}/${1}/temp
 
-	cd $PROJECT_DIR/${CDT_FOLDER}/${1}/temp
+	cd $CRTDIR/${CDT_FOLDER}/${1}/temp
 
 	#Modify xml
 	sed -i '/platform_id/{n;d}' iot_0.0_platform_dal_jedec_lpddr3_single_channel_dal.xml
@@ -116,7 +116,7 @@ gen_specified_cdt() {
 }
 
 zip_specified_cdt() {
-	cd $PROJECT_DIR/${CDT_FOLDER}
+	cd $CRTDIR/${CDT_FOLDER}
 
 	zip -p -r ${PROJECT_INFO[$(expr ${1} \* 2 + 0)]}.zip ${PROJECT_INFO[$(expr ${1} \* 2 + 0)]}
 	md5sum ${PROJECT_INFO[$(expr ${1} \* 2 + 0)]}.zip > ${PROJECT_INFO[$(expr ${1} \* 2 + 0)]}.zip.md5
@@ -128,10 +128,11 @@ zip_specified_cdt() {
 	DATE=$(date +%Y-%m-%d)
 
 	mv ${PROJECT_INFO[$(expr ${1} \* 2 + 0)]}.zip ${PROJECT_INFO[$(expr ${1} \* 2 + 0)]}_${DATE}_${MD5_NUMBER}.zip
+	
 }
 
 clean_all_cdt() {
-	cd $PROJECT_DIR
+	cd $CRTDIR
 	rm -rf ${CDT_FOLDER}*
 }
 
@@ -143,7 +144,7 @@ gen_all_cdt() {
 		gen_specified_cdt ${list}
 	done
 
-	cd $PROJECT_DIR
+	cd $CRTDIR
 
 	zip -p -r ${CDT_FOLDER}.zip ${CDT_FOLDER}
 	md5sum ${CDT_FOLDER}.zip > ${CDT_FOLDER}.zip.md5
@@ -153,14 +154,16 @@ gen_all_cdt() {
 	MD5_NUMBER=${md5_num}
 
 	DATE=$(date +%Y-%m-%d)
-
-	mv ${CDT_FOLDER}.zip ${CDT_FOLDER}_${DATE}_${MD5_NUMBER}.zip
+	
+	mkdir -p $CRTDIR/build
+	mv ${CDT_FOLDER}.zip $CRTDIR/build/${CDT_FOLDER}_${DATE}_${MD5_NUMBER}.zip
+	
 }
 
-clean_all_cdt() {
-	cd $PROJECT_DIR
-	rm -rf ${CDT_FOLDER}*
-}
+#clean_all_cdt() {
+#	cd $CRTDIR
+#	rm -rf ${CDT_FOLDER}*
+#}
 
 show_list() {
 	echo "    --generate cdt--    "
@@ -195,8 +198,8 @@ if [[ ${CLEAN} == "" ]] && [[ ${INTERACTIVE} == "" ]]; then
     USAGE
 fi
 
-if [ ! -d $PROJECT_DIR/${CDT_FOLDER} ];then
-	mkdir -p $PROJECT_DIR/${CDT_FOLDER}
+if [ ! -d $CRTDIR/${CDT_FOLDER} ];then
+	mkdir -p $CRTDIR/${CDT_FOLDER}
 fi
 
 if [[ ${CLEAN} == "--clean" ]] || [[ ${CLEAN} == "-c" ]]; then
@@ -227,4 +230,4 @@ else
 		fi
 	done
 fi
-
+clean_all_cdt

@@ -48,3 +48,6 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#cdt create result folder
+build/
