@@ -1,33 +1,39 @@
 #! /bin/bash
 
+readonly BOOT_VERSION="BOOT.XF.0.1/"
+readonly COMMON_VERSION="QCS405.LE.1.2/"
+readonly RPM_VERSION="RPM.BF.1.9/"
+readonly TZ_VERSION="TZ.XF.5.1.2/"
+readonly APPS_VERSION="LE.UM.4.1.2/"
+
 readonly PROJECT_DIR=$(readlink -f $(pwd)/..)
 readonly CRTDIR=$(pwd)
 readonly PKG_NAME="release_pkg"
 readonly FASTBOOT_PKG_NAME="fastboot_package"
-readonly FASTBOOT_SCRIPT="fastboot_script"
+readonly FASTBOOT_SCRIPT="script"
 
 die() { echo $* >&2; exit 1; }
 
 # copy pre-built binaries from workspace path
 ws_dir_pkgs_paths=(
-    ${PROJECT_DIR}/boot_images/QcomPkg/Qcs405Pkg/Bin/405/LA/RELEASE/xbl.elf
-    ${PROJECT_DIR}/boot_images/QcomPkg/Qcs405Pkg/Bin/405/LA/RELEASE/pmic.elf
-    ${PROJECT_DIR}/boot_images/QcomPkg/Tools/binaries/logfs_ufs_8mb.bin
-    ${PROJECT_DIR}/common/build/emmc/bin/BTFM.bin
-    ${PROJECT_DIR}/common/build/emmc/bin/asic/NON-HLOS.bin
-    ${PROJECT_DIR}/common/build/bin/asic/dspso.bin
-    ${PROJECT_DIR}/rpm_proc/build/ms/bin/AAAAANAZR/rpm.mbn
-    ${PROJECT_DIR}/trustzone_images/build/ms/bin/OAPAANAA/cmnlib.mbn
-    ${PROJECT_DIR}/trustzone_images/build/ms/bin/OAPAANAA/cmnlib64.mbn
-    ${PROJECT_DIR}/trustzone_images/build/ms/bin/OAPAANAA/devcfg.mbn
-    ${PROJECT_DIR}/trustzone_images/build/ms/bin/OAPAANAA/keymaster64.mbn
-    ${PROJECT_DIR}/trustzone_images/build/ms/bin/OAPAANAA/tz.mbn
-    ${PROJECT_DIR}/trustzone_images/build/ms/bin/OAPAANAA/uefi_sec.mbn
-    ${PROJECT_DIR}/trustzone_images/build/ms/bin/OAPAANAA/storsec.mbn
+    ${PROJECT_DIR}/${BOOT_VERSION}boot_images/QcomPkg/Qcs405Pkg/Bin/405/LA/RELEASE/xbl.elf
+    ${PROJECT_DIR}/${BOOT_VERSION}boot_images/QcomPkg/Qcs405Pkg/Bin/405/LA/RELEASE/pmic.elf
+    ${PROJECT_DIR}/${BOOT_VERSION}boot_images/QcomPkg/Tools/binaries/logfs_ufs_8mb.bin
+    ${PROJECT_DIR}/${COMMON_VERSION}common/build/emmc/bin/BTFM.bin
+    ${PROJECT_DIR}/${COMMON_VERSION}common/build/emmc/bin/asic/NON-HLOS.bin
+    ${PROJECT_DIR}/${COMMON_VERSION}common/build/bin/asic/dspso.bin
+    ${PROJECT_DIR}/${RPM_VERSION}rpm_proc/build/ms/bin/AAAAANAZR/rpm.mbn
+    ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/cmnlib.mbn
+    ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/cmnlib64.mbn
+    ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/devcfg.mbn
+#   ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/keymaster64.mbn
+    ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/tz.mbn
+    ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/uefi_sec.mbn
+    ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/storsec.mbn
 )
 
 # linky fun from built binaries
-deploy_dir=${PROJECT_DIR}/apps_proc/poky/build/tmp-glibc/deploy/images/
+deploy_dir=${PROJECT_DIR}/${APPS_VERSION}apps_proc/poky/build/tmp-glibc/deploy/images/
 deploy_dir_pkgs=(
     abl.elf
     boot.img
