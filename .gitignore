@@ -51,3 +51,8 @@ dkms.conf
 
 #cdt create result folder
 build/
+
+#Fastboot files
+fastboot_package/
+*.zip
+*.md5
