@@ -18,7 +18,7 @@ class FastbootImage:
     __image_table = (('xbl.elf', 'xbl_a'), ('pmic.elf', 'pmic_a'), ('logfs_ufs_8mb.bin', 'logfs'), \
                      ('BTFM.bin', 'bluetooth_a'), ('NON-HLOS.bin', 'modem_a'), ('dspso.bin', 'dsp_a'), \
                      ('rpm.mbn', 'rpm_a'), ('cmnlib.mbn', 'cmnlib_a'), ('cmnlib64.mbn', 'cmnlib64_a'), \
-                     ('devcfg.mbn', 'devcfg_a'),                                    ('tz.mbn', 'tz_a'), \
+                     ('devcfg.mbn', 'devcfg_a'), ('keymasterapp.mbn', 'keymaster_a'), ('tz.mbn', 'tz_a'), \
                      ('uefi_sec.mbn', 'uefisecapp_a'), ('storsec.mbn', 'storsec'), ('abl.elf', 'abl_a'), \
                      ('boot.img', 'boot_a'), ('persist.img', 'persist'), ('system.img', 'system_a'), \
                      ('systemrw.img', 'systemrw'), ('cache.img', 'cache'), ('usrdata.img', 'userdata'))

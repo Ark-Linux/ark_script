@@ -26,7 +26,7 @@ ws_dir_pkgs_paths=(
     ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/cmnlib.mbn
     ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/cmnlib64.mbn
     ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/devcfg.mbn
-#   ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/keymaster64.mbn
+    ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/keymasterapp.mbn
     ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/tz.mbn
     ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/uefi_sec.mbn
     ${PROJECT_DIR}/${TZ_VERSION}trustzone_images/build/ms/bin/OAPAANAA/storsec.mbn
